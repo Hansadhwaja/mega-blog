@@ -20,7 +20,6 @@ const Form = ({ buttonText }) => {
         authService.createAccount(data)
           .then((userData) => {
             disPatch(loginStore({ userData }))
-            alert('SignedUp Successfully')
             navigate('/')
           })
       }
@@ -28,7 +27,6 @@ const Form = ({ buttonText }) => {
         authService.login(data)
           .then((userData) => {
             disPatch(loginStore({ userData }))
-            alert('LoggedIn Successfully')
             navigate('/')
           })
       }
@@ -53,7 +51,7 @@ const Form = ({ buttonText }) => {
       <div className='flex flex-col gap-2'>
         <label className='text-lg font-semibold'>Password</label>
         <input type='password' placeholder='Enter Your Password' className='shadow-xl p-2 rounded-lg border border-slate-300' {...register("password")} />
-        <p className='font-semibold text-[12px]'>*Password must be of 8 characters.</p>
+        <p className='font-semibold text-[12px]'>*Password must be atleast of 8 characters.</p>
       </div>
 
       <button type='submit' className='px-4 py-2 mt-5 bg-orange-400 w-fit rounded-lg text-lg font-semibold text-white ml-[40%]' onClick={()=> {

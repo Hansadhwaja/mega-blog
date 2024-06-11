@@ -31,7 +31,6 @@ const PostForm = ({ post }) => {
         }
     }, [post, reset]);
 
-    console.log('PostFormPost', post);
 
     const submit = async (data) => {
         try {

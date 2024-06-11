@@ -12,11 +12,8 @@ const Home = () => {
       service.getPosts([Query.equal('status', 'active')])
         .then(res => setPosts(res.documents))
     }
-
-
   }, []);
-  console.log("Posts:", posts);
-
+  
   return (
     <div>
 

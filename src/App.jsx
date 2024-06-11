@@ -19,7 +19,6 @@ function App() {
     authService.getCurrentUser()
       .then(userData => {
         if (userData) {
-          console.log('UserData:',userData);
           disPatch(loginStore({ userData }))
         } else {
           disPatch(logoutStore())

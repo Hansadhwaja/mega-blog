@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 const AllPosts = () => {
   const [posts, setPosts] = useState([]);
   const user = useSelector(state => state.auth.userData)
-  console.log('Posts:', posts);
   useEffect(() => {
     function fetchPost() {
       service.getPosts([
