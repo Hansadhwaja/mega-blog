@@ -78,17 +78,16 @@ const Form = ({ buttonText }) => {
         </p>
       </div>
 
-      <div>
-        {buttonText == 'SignUp' ? (
-          <p>Do You have any Account ?Please <Link to={'/login'} className='text-sky-400 font-semibold underline'>Login</Link></p>
-        ) : (
-          <p>Do not have any Account ?Please <Link to={'/signup'} className='text-sky-400 font-semibold underline'>SignUp</Link></p>
-        )}
-      </div>
+
+      {buttonText == 'SignUp' ? (
+        <p className='text-sm lg:text-lg'>Do You have any Account ?Please <Link to={'/login'} className='text-sky-400 font-semibold underline'>Login</Link></p>
+      ) : (
+        <p className='text-sm lg:text-lg'>Do not have any Account ?Please <Link to={'/signup'} className='text-sky-400 font-semibold underline'>SignUp</Link></p>
+      )}
 
       <button
         type='submit'
-        className='px-10 py-2 mt-5 bg-orange-400 w-fit rounded-full text-lg font-semibold text-white ml-[40%] flex gap-3'
+        className='px-10 py-2 mt-5 bg-orange-400 w-fit rounded-full text-lg font-semibold text-white flex gap-3'
         onClick={() => { setLoader(true) }}
       >
 

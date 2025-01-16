@@ -10,7 +10,6 @@ const SinglePost = ({ id, img, title, userId }) => {
         <img
           src={service.getFilePreview(img)}
           alt={title}
-          loading='lazy'
           className='object-cover rounded-t-xl w-full' />
         <div className='mt-2 p-2 text-left'>
           <p className='text-slate-500 font-medium capitalize text-sm md:text-lg'>{title}</p>
