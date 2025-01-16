@@ -18,7 +18,7 @@ const Edit = () => {
 
   return (
     <div>
-      <h1 className='text-4xl font-semibold text-white'>Edit Your Post</h1>
+      <h1 className='text-4xl font-semibold'>Edit Your Post</h1>
       {post && (
         <PostForm post={post} />
       )}

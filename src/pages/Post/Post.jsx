@@ -33,17 +33,10 @@ const Post = () => {
 
   return post ? (
     <div className='border-2 rounded-xl my-4 p-4 flex flex-wrap gap-5'>
-      <div className='flex justify-center w-fit'>
-        <img
-          src={service.getFilePreview(post.featuredImage)}
-          alt={post.title}
-          className='object-cover rounded-lg'
-        />
-      </div>
-      <div className='m-3 w-fit flex flex-col justify-between'>
+      <div className='m-3 w-full flex justify-between'>
         <div className='my-5'>
-          <h1 className='text-3xl font-bold text-white'>{post.title}</h1>
-          <span className='text-lg font-semibold mt-3'>{parse(post.content)}</span>
+          <h1 className='text-3xl font-bold capitalize'>{post.title}</h1>
+          <span className='text-lg font-semibold mt-3 capitalize'>{parse(post.content)}</span>
         </div>
 
         {isAuthor && (
@@ -56,6 +49,13 @@ const Post = () => {
         )}
 
 
+      </div>
+      <div className='flex justify-center w-fit'>
+        <img
+          src={service.getFilePreview(post.featuredImage)}
+          alt={post.title}
+          className='object-cover rounded-lg'
+        />
       </div>
     </div>
   )

@@ -1,3 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Outfit:wght@100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*{
+    font-family:Outfit;
+}
+
+@layer utilities{
+    .gradient-bg{
+        @apply bg-gradient-to-tr from-teal-50 to-indigo-50;
+    }
+    .gradient-bg-2{
+        @apply bg-gradient-to-tr from-emerald-200 to-emerald-50;
+    }
+}

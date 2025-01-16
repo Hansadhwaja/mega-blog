@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import authService from '../../appwrite/auth'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginStore } from '../../store/authSlice';
+import Loader from '../Loader';
+import { Eye, EyeOff } from 'lucide-react';
 
 
 const Form = ({ buttonText }) => {
@@ -11,8 +13,11 @@ const Form = ({ buttonText }) => {
   const navigate = useNavigate();
   const disPatch = useDispatch();
   const [loader, setLoader] = useState(false)
-  const [loaderButtonText, setLoaderButtonText] = useState(buttonText)
+  const [isPasswordVisible, setPasswordVisible] = useState(false);
 
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!isPasswordVisible);
+  };
 
   const submit = (data) => {
     try {
@@ -38,32 +43,73 @@ const Form = ({ buttonText }) => {
   }
 
   return (
-    <form className='flex flex-col gap-2 max-w-xl m-auto bg-white p-8 my-5 text-left rounded-xl' onSubmit={handleSubmit(submit)}>
+    <form className='flex flex-col gap-2 max-w-xl m-auto border p-8 my-5 text-left rounded-xl shadow-xl gradient-bg-2' onSubmit={handleSubmit(submit)}>
       <div className={`flex flex-col gap-2 ${buttonText === 'Login' && 'hidden'}`}>
-        <label className='text-lg font-semibold'>Name</label>
-        <input type='text' placeholder='Enter Your Name' className='shadow-xl p-2 rounded-lg border border-slate-300' {...register("name")} />
+        <label htmlFor='Name' className='text-lg font-semibold'>Name</label>
+        <input id='Name' type='text' placeholder='Enter Your Name' className='shadow-xl p-2 rounded-lg border border-slate-300' {...register("name")} />
       </div>
 
       <div className='flex flex-col gap-2'>
-        <label className='text-lg font-semibold'>Email</label>
-        <input type='email' placeholder='Enter Your Email' className='shadow-xl p-2 rounded-lg border border-slate-300' {...register("email")} />
-      </div>
-      <div className='flex flex-col gap-2'>
-        <label className='text-lg font-semibold'>Password</label>
-        <input type='password' placeholder='Enter Your Password' className='shadow-xl p-2 rounded-lg border border-slate-300' {...register("password")} />
-        <p className='font-semibold text-[12px]'>*Password must be atleast of 8 characters.</p>
+        <label htmlFor='Email' className='text-lg font-semibold'>Email</label>
+        <input id='Email' type='email' placeholder='Enter Your Email' className='shadow-xl p-2 rounded-lg border border-slate-300' {...register("email")} />
       </div>
 
-      <button type='submit' className='px-4 py-2 mt-5 bg-orange-400 w-fit rounded-lg text-lg font-semibold text-white ml-[40%]' onClick={()=> {
-        setLoader(true)
-        if (buttonText === 'SignUp'){
-          setLoaderButtonText('SigningUp....')
-        }
-        else{
-          setLoaderButtonText('LoggingIn....')
-        }
-        
-        }}>{loaderButtonText}</button>
+      <div className="flex flex-col gap-2">
+        <label htmlFor="password" className="text-lg font-semibold">Password</label>
+        <div className="relative">
+          <input
+            id="password"
+            type={isPasswordVisible ? "text" : "password"}
+            placeholder="Enter Your Password"
+            className="shadow-xl p-2 rounded-lg border border-slate-300 w-full"
+            {...register("password")}
+          />
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="absolute right-3 top-2 text-slate-500"
+            aria-label={isPasswordVisible ? "Hide password" : "Show password"}
+          >
+            {isPasswordVisible ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
+        </div>
+        <p className="font-semibold text-xs text-slate-500">
+          *Password must be at least 8 characters.
+        </p>
+      </div>
+
+      <div>
+        {buttonText == 'SignUp' ? (
+          <p>Do You have any Account ?Please <Link to={'/login'} className='text-sky-400 font-semibold underline'>Login</Link></p>
+        ) : (
+          <p>Do not have any Account ?Please <Link to={'/signup'} className='text-sky-400 font-semibold underline'>SignUp</Link></p>
+        )}
+      </div>
+
+      <button
+        type='submit'
+        className='px-10 py-2 mt-5 bg-orange-400 w-fit rounded-full text-lg font-semibold text-white ml-[40%] flex gap-3'
+        onClick={() => { setLoader(true) }}
+      >
+
+        {buttonText == 'SignUp' ?
+          (
+            loader ? (
+              <>
+                <Loader />
+                <p>SigningUp...</p>
+              </>
+            ) : ('SignUp')
+          )
+          : (
+            loader ? (
+              <>
+                <Loader />
+                <p>Logging...</p>
+              </>
+            ) : ('Login')
+          )}
+      </button>
     </form>
   )
 }

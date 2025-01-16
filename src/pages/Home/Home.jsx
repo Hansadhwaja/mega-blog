@@ -1,49 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import service from '../../appwrite/service';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Query } from 'appwrite';
+import { useNavigate } from 'react-router-dom';
+import SinglePost from '../../components/Post/SinglePost';
 
 const Home = () => {
   const user = useSelector(state => state.auth.userData);
   const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     if (user) {
       service.getPosts([Query.equal('status', 'active')])
         .then(res => setPosts(res.documents))
     }
+    else {
+      navigate('/login');
+    }
   }, []);
-  
+  if(posts.length==0) return <h1 className='text-2xl h-[300px]'>No Posts yet.Please add to see posts.</h1>
+
   return (
-    <div>
-
-      {!user ? (
-        <div>
-          <h1 className='text-3xl text-white font-semibold mx-4 my-8'>Login To See Posts</h1>
+    <div className='columns-1 sm:columns-2 lg:columns-3 gap-4 min-h-[300px]'>
+      {posts.map((post) => (
+        <div key={post.$id}>
+          <SinglePost
+            id={post.$id}
+            img={post.featuredImage}
+            title={post.title}
+            userId={post.userId}
+          />
         </div>
-      ) : (
-        <div className='flex  w-full flex-wrap justify-center'>
-          {posts.map((post) => (
-
-            <div key={post.$id} className='flex flex-col gap-2 bg-white w-fit p-4 rounded-lg m-4'>
-              <Link to={`/post/${post.$id}`}>
-                <div className=''>
-                  <img
-                    src={service.getFilePreview(post.featuredImage)}
-                    alt={post.title}
-                    className='object-cover rounded-lg h-48 w-96' />
-                </div>
-                <div className='text-xl font-semibold border-t-2 my-2'>{post.title}</div>
-              </Link>
-            </div>
-          ))}
-
-        </div>
-      )}
-
+      ))}
     </div>
-
-
   )
 }
 

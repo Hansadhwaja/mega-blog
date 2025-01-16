@@ -1,4 +1,4 @@
-import { Client, Databases, ID, Query, Storage } from "appwrite";
+import { Client, Databases, ID, Storage } from "appwrite";
 import config from "../config/config";
 
 
@@ -6,6 +6,7 @@ export class Service {
     client = new Client();
     databases;
     bucket;
+
 
     constructor() {
         this.client
@@ -35,22 +36,35 @@ export class Service {
         }
     }
 
-    async updatePost(slug, { title, content, featuredImage, status }) {
+    async updateDocument(slug, updateData) {
         try {
             return await this.databases.updateDocument(
                 config.appwriteDatabaseId,
                 config.appwriteCollectionId,
                 slug,
-                {
-                    title,
-                    content,
-                    featuredImage,
-                    status
-                }
-            )
+                updateData
+            );
         } catch (error) {
-            console.log("Service :: updatePost error:", error);
+            console.error("Service :: updateDocument error:", error);
+            throw new Error("Failed to update the document. Please try again later.");
         }
+    }
+
+    async updatePost(slug, { title, content, featuredImage, status }) {
+        const updateData = {};
+        if (title !== undefined) updateData.title = title;
+        if (content !== undefined) updateData.content = content;
+        if (featuredImage !== undefined) updateData.featuredImage = featuredImage;
+        if (status !== undefined) updateData.status = status;
+
+        return this.updateDocument(slug, updateData);
+    }
+
+    async updateStatus(slug, { status }) {
+        if (status === undefined) {
+            throw new Error("Status is required to update the document.");
+        }
+        return this.updateDocument(slug, { status });
     }
 
     async deletePost(slug) {
