@@ -47,12 +47,12 @@ const Header = () => {
             >
               <p className='h-full px-4 py-2 hover:text-sky-400 transition duration-200 ease-in-out hover:-translate-y-1 hover:scale-110'>Add Post</p>
             </NavLink>
-           
-              <button className='px-10 py-2 rounded-full transition duration-200 hover:bg-red-400 hover:text-white flex gap-2' onClick={handleClick}>
-                <LogOutIcon />
-                Logout
-              </button>
-           
+
+            <button className='px-10 py-2 rounded-full transition duration-200 hover:bg-red-400 hover:text-white flex gap-2' onClick={handleClick}>
+              <LogOutIcon />
+              Logout
+            </button>
+
           </div>
         ) : (
           <ul className='flex my-auto'>

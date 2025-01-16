@@ -29,12 +29,7 @@ function App() {
     setLoading(false)
   }, [status, loading]);
 
-  // useEffect(() => {
-  //   if (loading) {
-  //     navigate('/')
-  //   }
-  // }, []);
-
+ 
   return loading ? (
     <div className='m-auto min-h-screen text-center gradient-bg'>
       <Loader />
