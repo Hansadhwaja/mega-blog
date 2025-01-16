@@ -41,7 +41,7 @@ function App() {
     </div>
   ) : (
     <div className='text-center min-h-screen gradient-bg'>
-      <div className='p-8'>
+      <div className='p-2 sm:p-8'>
         <Header />
         <Outlet />
         <Footer />
